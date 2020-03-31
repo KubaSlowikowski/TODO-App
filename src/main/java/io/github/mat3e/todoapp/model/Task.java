@@ -1,17 +1,22 @@
 package io.github.mat3e.todoapp.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "tasks")
 class Task {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @NotBlank(message = "Tasks description must be not null and not be empty")
     private String description;
     private boolean done;
+
+//    Task() {
+//
+//    }
 
     public int getId() {
         return id;
