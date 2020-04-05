@@ -14,6 +14,8 @@ public interface TaskRepository { //to jest repozytorium zawierające metody,  k
 
     Optional<Task> findById(Integer id);
 
+    boolean existsById(Integer var1);
+
     Task save(Task entity);
 
     List<Task> findByDone(@Param("state") boolean done); //z racji tego, że interfejs ma adnotację @RepositoryRestResource, metoda ta będzie dostępna pod jakimś adresem
