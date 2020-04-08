@@ -1,0 +1,8 @@
+spring:
+  h2.console:
+    enabled: true
+    path: /console
+  datasource:
+    url: 'jdbc:h2:file:/C:/Users/Admin/IdeaProjects/todo-app/todo-db'
+  main.banner-mode: OFF
+task.template.allowMultipleTasks: false
