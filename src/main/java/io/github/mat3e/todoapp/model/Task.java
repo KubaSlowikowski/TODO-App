@@ -15,15 +15,14 @@ public class Task {
     private String description;
     private boolean done;
     private LocalDateTime deadline;
-
-    public Task() {
-    }
+    @Embedded
+    private Audit audit = new Audit();
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    void setId(int id) {
         this.id = id;
     }
 
@@ -49,5 +48,11 @@ public class Task {
 
     void setDeadline(LocalDateTime deadline) {
         this.deadline = deadline;
+    }
+
+    public void updateFrom(final Task source) {
+        description = source.description;
+        done = source.done;
+        deadline = source.deadline;
     }
 }
