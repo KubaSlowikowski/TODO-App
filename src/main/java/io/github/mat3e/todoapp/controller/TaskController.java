@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -94,5 +95,14 @@ class TaskController {
         return ResponseEntity.created(URI.create("/" + result.getId())).body(result);
     }
 
-
+    @Transactional //zmiana zostanie zarejestrowana w bazie danych
+    @RequestMapping(method = RequestMethod.PATCH, path = "/tasks/{id}")
+    public ResponseEntity<?> toogleTask(@PathVariable int id) { //warunek konieczny - metoda publiczna
+        if(!repository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        repository.findById(id)
+                .ifPresent(task -> task.setDone(!task.isDone()));
+        return ResponseEntity.noContent().build();
+    }
 }

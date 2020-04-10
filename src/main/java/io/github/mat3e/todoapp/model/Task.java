@@ -2,6 +2,7 @@ package io.github.mat3e.todoapp.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tasks")
@@ -13,6 +14,10 @@ public class Task {
     @NotBlank(message = "Tasks description must be not null and not be empty")
     private String description;
     private boolean done;
+    private LocalDateTime deadline;
+
+    public Task() {
+    }
 
     public int getId() {
         return id;
@@ -26,7 +31,7 @@ public class Task {
         return description;
     }
 
-    public void setDescription(String description) {
+    void setDescription(String description) {
         this.description = description;
     }
 
@@ -36,5 +41,13 @@ public class Task {
 
     public void setDone(boolean done) {
         this.done = done;
+    }
+
+    public LocalDateTime getDeadline() {
+        return deadline;
+    }
+
+    void setDeadline(LocalDateTime deadline) {
+        this.deadline = deadline;
     }
 }
