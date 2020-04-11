@@ -18,7 +18,7 @@ public class Task {
     @Embedded
     private Audit audit = new Audit();
     @ManyToOne
-    @JoinColumn(name = "task_group_id")
+    @JoinColumn(name = "task_group_id") //jak pobieramy taska, pobieramy tez grupe
     private TaskGroup group;
 
     public Task() {

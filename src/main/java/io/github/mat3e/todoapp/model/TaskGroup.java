@@ -16,6 +16,9 @@ public class TaskGroup {
     private boolean done;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "group") //CascadeType.ALL - gdy usune grupe, usuwam wszystkie taski, mappedBy - wewnątrz każdego Taska ta grupa jest zmapowana jako 'group'
     private Set<Task> tasks; //w hibernate List nie zachowuje kolejnosci, wiec lepiej uzyc Set
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project project;
 
     public TaskGroup() {
     }
