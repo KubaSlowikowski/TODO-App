@@ -22,6 +22,12 @@ public class Project {
     public Project() {
     }
 
+    public Project(final String description, final Set<TaskGroup> taskGroups, final Set<ProjectStep> projectSteps) {
+        this.description = description;
+        this.taskGroups = taskGroups;
+        this.projectSteps = projectSteps;
+    }
+
     public int getId() {
         return id;
     }
@@ -38,7 +44,7 @@ public class Project {
         this.description = description;
     }
 
-    Set<TaskGroup> getTaskGroups() {
+    public Set<TaskGroup> getTaskGroups() {
         return taskGroups;
     }
 
@@ -46,7 +52,7 @@ public class Project {
         this.taskGroups = taskGroups;
     }
 
-    Set<ProjectStep> getProjectSteps() {
+    public Set<ProjectStep> getProjectSteps() {
         return projectSteps;
     }
 
