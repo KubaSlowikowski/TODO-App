@@ -61,7 +61,7 @@ class ProjectServiceTest {
 
     @Test
     @DisplayName(value = "should throw IllegalArgumentException when configured to allow just 1 group and no groups and on projects for given id")
-    void createGroup_noMultipleGroupsConfig_And_noUndoneGroupsExists_noProjects_throwsIllegalArgumentException() {
+    void createGroup_noMultipleGroupsConfig_And_noUndoneGroupsExist_noProjects_throwsIllegalArgumentException() {
         //given
         var mockRepository = mock(ProjectRepository.class);
         when(mockRepository.findById(anyInt())).thenReturn(Optional.empty());
@@ -172,9 +172,10 @@ class ProjectServiceTest {
         public TaskGroup save(final TaskGroup entity) {
             if (entity.getId() == 0) {
                 try {
+                    //mechanizm refleksji
                     var field = TaskGroup.class.getDeclaredField("id");
                     field.setAccessible(true);
-                    field.set(entity, ++index); //dostęp przez refleksję
+                    field.set(entity, ++index);
                 } catch (NoSuchFieldException | IllegalAccessException e) {
                     throw new RuntimeException(e);
                 }
@@ -182,7 +183,5 @@ class ProjectServiceTest {
             map.put(entity.getId(), entity);
             return entity;
         }
-    }
-
-    ;
+    };
 }
