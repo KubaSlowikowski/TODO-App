@@ -39,5 +39,6 @@ public class TaskGroupService { //warstwa pośrednia między repozytorium a cont
         TaskGroup result = repository.findById(groupId)
                 .orElseThrow(() -> new IllegalArgumentException("TaskGroup with given id not found"));
         result.setDone(!result.isDone());
+        repository.save(result);
     }
 }
