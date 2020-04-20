@@ -4,14 +4,13 @@ import io.github.mat3e.todoapp.TaskConfigurationProperties;
 import io.github.mat3e.todoapp.model.*;
 import io.github.mat3e.todoapp.model.projection.GroupReadModel;
 import io.github.mat3e.todoapp.model.projection.GroupWriteModel;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Service
+//@Service
 public class ProjectService {
     private ProjectRepository repository;
     private TaskGroupRepository taskGroupRepository;

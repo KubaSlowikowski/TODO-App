@@ -5,12 +5,11 @@ import io.github.mat3e.todoapp.model.TaskGroupRepository;
 import io.github.mat3e.todoapp.model.TaskRepository;
 import io.github.mat3e.todoapp.model.projection.GroupReadModel;
 import io.github.mat3e.todoapp.model.projection.GroupWriteModel;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
+//@Service
 public class TaskGroupService { //warstwa pośrednia między repozytorium a controller'em
     private TaskGroupRepository repository;
     private TaskRepository taskRepository;
