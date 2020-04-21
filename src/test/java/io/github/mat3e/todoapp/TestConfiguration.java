@@ -4,16 +4,30 @@ import io.github.mat3e.todoapp.model.Task;
 import io.github.mat3e.todoapp.model.TaskRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
+import javax.sql.DataSource;
 import java.util.*;
 
 @Configuration
 class TestConfiguration {
+
     @Bean
-    @Profile("integration") //to repo bedzie dzialalo, jeśli odpalimy Springa na profilu 'integration', w przeciwnym przypadku bedziemy korzystac z sqlTaskRepository
+    @Primary
+    @Profile("!integration")
+    DataSource e2eTestDataSource() {
+        var result = new DriverManagerDataSource("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "sa", "");
+        result.setDriverClassName("org.h2.Driver");
+        return result;
+    }
+
+    @Bean
+    @Primary //ten bean przejmuje kontrolę, gdy odpalamy wszystko w profilu "integration"
+    @Profile("integration") //to repo bedzie dzialalo, jeśli odpalimy Springa na profilu 'integration'
     TaskRepository testRepo() { //repozytorium symulujące bazę danych (jest niezalezne od niej) do używania w testach
         return new TaskRepository() {
             private Map<Integer, Task> tasks = new HashMap<>();
