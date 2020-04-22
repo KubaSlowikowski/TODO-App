@@ -20,7 +20,7 @@ class TestConfiguration {
     @Bean
     @Primary
     @Profile("!integration")
-    DataSource e2eTestDataSource() {
+    DataSource e2eTestDataSource() { // baza H2 na potrzeby testów
         var result = new DriverManagerDataSource("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "sa", "");
         result.setDriverClassName("org.h2.Driver");
         return result;

@@ -1,6 +1,7 @@
 package io.github.mat3e.todoapp.model.projection;
 
 import io.github.mat3e.todoapp.model.Task;
+import io.github.mat3e.todoapp.model.TaskGroup;
 
 import java.time.LocalDateTime;
 
@@ -24,7 +25,7 @@ public class GroupTaskWriteModel { //pozwala na przesylanie taska w bezpieczny s
         this.deadline = deadline;
     }
 
-    public Task toTask() {
-        return new Task(description, deadline);
+    public Task toTask(final TaskGroup taskGroup) {
+        return new Task(description, deadline, taskGroup);
     }
 }
