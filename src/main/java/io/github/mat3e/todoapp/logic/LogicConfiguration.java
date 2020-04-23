@@ -6,7 +6,6 @@ import io.github.mat3e.todoapp.model.TaskGroupRepository;
 import io.github.mat3e.todoapp.model.TaskRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 
 @Configuration
 class LogicConfiguration {
@@ -21,7 +20,7 @@ class LogicConfiguration {
     }
 
     @Bean
-    @Profile("!integration")
+//    @Profile("!integration")
     TaskGroupService taskGroupService(
             final TaskGroupRepository repository,
             final TaskRepository taskRepository

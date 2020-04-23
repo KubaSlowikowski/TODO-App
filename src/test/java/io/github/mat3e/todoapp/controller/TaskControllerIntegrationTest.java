@@ -9,10 +9,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -32,6 +35,20 @@ class TaskControllerIntegrationTest {
         //when+then
         mockMvc.perform(get("/tasks/" + id))
                 .andExpect(status().is2xxSuccessful());
+    }
 
+    @Test
+    void httpGet_returnsAllTheTasks() throws Exception {
+        //given
+        final int initialSize = repo.findAll().size();
+        final var today = LocalDate.now().atStartOfDay();
+        repo.save(new Task("foo", today));
+        repo.save(new Task("bar", today));
+        //when + then
+        var result = mockMvc.perform(get("/tasks"))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(content().json("[{\"id\":1,\"description\":\"foo\",\"done\":false,\"deadline\":\"" + today + ":00\"},{\"id\":2,\"description\":\"bar\",\"done\":false,\"deadline\":\"" + today + ":00\"}]"));
     }
 }
