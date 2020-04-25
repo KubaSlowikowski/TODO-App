@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/tasks")
@@ -29,9 +28,9 @@ class TaskController {
 
     //@GetMapping(value = "/tasks", params = {"!sort", "!page", "!size"}) //wchodzę w tą metodę, gdy nie użyłem metod sort,page,size
     @RequestMapping(method = RequestMethod.GET, params = {"!sort", "!page", "!size"}) // jak tylko przychodzi request, ma on trafić do tej metody
-    CompletableFuture<ResponseEntity<List<Task>>> readAllTasks() { //wypisuje tylko listę tasków
+    ResponseEntity<List<Task>> readAllTasks() { //wypisuje tylko listę tasków
         logger.warn("Exposing all the tasks!");
-        return service.findAllAsync().thenApply(ResponseEntity::ok);
+        return ResponseEntity.ok(repository.findAll());
     }
 
     //@GetMapping(value = "/tasks") //wchodzę tu jak użyłem metod sort/page/pageable
