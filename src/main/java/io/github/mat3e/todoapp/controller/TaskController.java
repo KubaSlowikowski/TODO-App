@@ -1,5 +1,6 @@
 package io.github.mat3e.todoapp.controller;
 
+import io.github.mat3e.todoapp.logic.TaskService;
 import io.github.mat3e.todoapp.model.Task;
 import io.github.mat3e.todoapp.model.TaskRepository;
 import org.slf4j.Logger;
@@ -12,23 +13,25 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/tasks")
 class TaskController {
     private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
     private final TaskRepository repository;
+    private final TaskService service;
 
-    TaskController(final TaskRepository repository) {
+    TaskController(final TaskRepository repository, final TaskService service) {
         this.repository = repository;
+        this.service = service;
     }
-
 
     //@GetMapping(value = "/tasks", params = {"!sort", "!page", "!size"}) //wchodzę w tą metodę, gdy nie użyłem metod sort,page,size
     @RequestMapping(method = RequestMethod.GET, params = {"!sort", "!page", "!size"}) // jak tylko przychodzi request, ma on trafić do tej metody
-    ResponseEntity<List<Task>> readAllTasks() { //wypisuje tylko listę tasków
+    CompletableFuture<ResponseEntity<List<Task>>> readAllTasks() { //wypisuje tylko listę tasków
         logger.warn("Exposing all the tasks!");
-        return ResponseEntity.ok(repository.findAll());
+        return service.findAllAsync().thenApply(ResponseEntity::ok);
     }
 
     //@GetMapping(value = "/tasks") //wchodzę tu jak użyłem metod sort/page/pageable
