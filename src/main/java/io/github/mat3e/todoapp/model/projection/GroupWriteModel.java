@@ -30,7 +30,7 @@ public class GroupWriteModel {
         result.setDescription(description);
         result.setTasks(
                 tasks.stream()
-                        .map(source -> source.toTask(result))
+                        .map(taskWriteModel -> taskWriteModel.toTask(result))
                         .collect(Collectors.toSet())
         );
         return result;

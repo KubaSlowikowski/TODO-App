@@ -9,6 +9,7 @@ import java.util.Set;
 public class TaskGroup {
 
     @Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @NotBlank(message = "Tasks group's description must not be empty")

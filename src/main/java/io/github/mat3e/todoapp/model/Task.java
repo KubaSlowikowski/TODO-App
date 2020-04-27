@@ -28,12 +28,15 @@ public class Task {
         this(description,deadline, null);
     }
 
-    public Task(String description, LocalDateTime deadline, TaskGroup taskGroup) {
+    public Task(String description, LocalDateTime deadline, TaskGroup group) {
         this.description = description;
         this.deadline = deadline;
         if(group != null) {
             this.group = group;
         }
+//        else {
+//            System.err.println("Group is null!");
+//        }
     }
 
     public int getId() {

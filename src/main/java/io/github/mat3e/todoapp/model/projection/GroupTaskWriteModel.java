@@ -25,7 +25,7 @@ public class GroupTaskWriteModel { //pozwala na przesylanie taska w bezpieczny s
         this.deadline = deadline;
     }
 
-    public Task toTask(final TaskGroup taskGroup) {
+    Task toTask(final TaskGroup taskGroup) {
         return new Task(description, deadline, taskGroup);
     }
 }

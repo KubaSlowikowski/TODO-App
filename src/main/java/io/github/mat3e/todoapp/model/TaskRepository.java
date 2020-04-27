@@ -3,6 +3,7 @@ package io.github.mat3e.todoapp.model;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +13,10 @@ public interface TaskRepository { //to jest repozytorium zawierające metody,  k
     Page<Task> findAll(Pageable page);
 
     Optional<Task> findById(Integer id);
+
+    List<Task> findAllByGroup_Id(Integer groupId);
+
+    List<Task> findAllByDeadlineBeforeOrDeadlineNullAndDoneFalse(LocalDateTime date);
 
     boolean existsById(Integer var1);
 
