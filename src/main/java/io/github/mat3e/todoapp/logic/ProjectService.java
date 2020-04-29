@@ -5,6 +5,7 @@ import io.github.mat3e.todoapp.model.*;
 import io.github.mat3e.todoapp.model.projection.GroupReadModel;
 import io.github.mat3e.todoapp.model.projection.GroupTaskWriteModel;
 import io.github.mat3e.todoapp.model.projection.GroupWriteModel;
+import io.github.mat3e.todoapp.model.projection.ProjectWriteModel;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -30,19 +31,19 @@ public class ProjectService {
     }
 
     public Project create(final String description, final Set<GroupWriteModel> groupWriteModels, final Set<ProjectStep> steps) {
-        Project result = new Project(
-                description,
-                groupWriteModels
-                        .stream()
-                        .map(GroupWriteModel::toGroup)
-                        .collect(Collectors.toSet()),
-                steps);
+        Project result = new Project();
+        result.setDescription(description);
+        result.setTaskGroups(groupWriteModels
+                .stream()
+                .map(groupWriteModel -> groupWriteModel.toGroup(result))
+                .collect(Collectors.toSet()));
+        result.setProjectSteps(steps);
         repository.save(result);
         return result;
     }
 
-    public Project save(Project toSave) {
-        return repository.save(toSave);
+    public Project save(final ProjectWriteModel toSave) {
+        return repository.save(toSave.toProject());
     }
 
     public GroupReadModel createGroup(final int projectId, final LocalDateTime deadline) {
@@ -62,21 +63,7 @@ public class ProjectService {
                                     }
                             ).collect(Collectors.toSet())
                     );
-                    return taskGroupService.createGroup(targetGroup);
+                    return taskGroupService.createGroup(targetGroup, project);
                 }).orElseThrow(() -> new IllegalArgumentException("Project with given id not found"));
-//        var optional = repository.findById(projectId);
-//        optional.orElseThrow(() -> new IllegalArgumentException("Project with provided id does not exist"));
-//        Project project = optional.get();
-//        Set<Task> tasks = null;
-//        for (ProjectStep step : project.getProjectSteps()) {
-//            tasks.add(new Task(step.getDescription(), deadline.plusDays(step.getDaysToDeadline())));
-//        }
-//        TaskGroup taskGroup = new TaskGroup();
-//        taskGroup.setDescription(project.getDescription());
-//        taskGroup.setProject(project);
-//        taskGroup.setTasks(tasks);
-//        taskGroupRepository.save(taskGroup);
-//
-//        return new GroupReadModel(taskGroup);
     }
 }

@@ -1,5 +1,6 @@
 package io.github.mat3e.todoapp.logic;
 
+import io.github.mat3e.todoapp.model.Project;
 import io.github.mat3e.todoapp.model.TaskGroup;
 import io.github.mat3e.todoapp.model.TaskGroupRepository;
 import io.github.mat3e.todoapp.model.TaskRepository;
@@ -20,7 +21,11 @@ public class TaskGroupService { //warstwa pośrednia między repozytorium a cont
     }
 
     public GroupReadModel createGroup(final GroupWriteModel source) {
-        TaskGroup result = repository.save(source.toGroup());
+        return createGroup(source, null);
+    }
+
+    GroupReadModel createGroup(final GroupWriteModel source, final Project project) {
+        TaskGroup result = repository.save(source.toGroup(project));
         return new GroupReadModel(result);
     }
 

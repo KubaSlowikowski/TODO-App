@@ -40,7 +40,7 @@ public class Project {
         return description;
     }
 
-    void setDescription(final String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -48,7 +48,7 @@ public class Project {
         return taskGroups;
     }
 
-    void setTaskGroups(final Set<TaskGroup> taskGroups) {
+    public void setTaskGroups(final Set<TaskGroup> taskGroups) {
         this.taskGroups = taskGroups;
     }
 
@@ -56,7 +56,7 @@ public class Project {
         return projectSteps;
     }
 
-    void setProjectSteps(final Set<ProjectStep> projectSteps) {
+    public void setProjectSteps(final Set<ProjectStep> projectSteps) {
         this.projectSteps = projectSteps;
     }
 }
