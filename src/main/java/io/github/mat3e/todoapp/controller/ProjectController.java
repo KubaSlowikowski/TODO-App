@@ -1,14 +1,19 @@
 package io.github.mat3e.todoapp.controller;
 
 import io.github.mat3e.todoapp.logic.ProjectService;
+import io.github.mat3e.todoapp.model.Project;
 import io.github.mat3e.todoapp.model.ProjectStep;
 import io.github.mat3e.todoapp.model.projection.ProjectWriteModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/projects")
@@ -26,7 +31,14 @@ class ProjectController {
     }
 
     @PostMapping
-    String addProject(@ModelAttribute("project") ProjectWriteModel current, Model model) {
+    String addProject(
+            @ModelAttribute("project") @Valid ProjectWriteModel current,
+            BindingResult bindingResult,
+            Model model
+    ) {
+        if(bindingResult.hasErrors()) {
+            return "projects";
+        }
         service.save(current);
         model.addAttribute("project", new ProjectWriteModel());
         model.addAttribute("message", "Dodano projekt!");
@@ -37,5 +49,10 @@ class ProjectController {
     String addProjectStep(@ModelAttribute("project") ProjectWriteModel current) { // @ModelAttribute - dla tego modelu ('project') my coś zmieniamy
         current.getSteps().add(new ProjectStep());
         return "projects";
+    }
+
+    @ModelAttribute("projects")
+    List<Project> getProjects() {
+        return service.findAll();
     }
 }
