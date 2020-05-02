@@ -10,7 +10,7 @@ public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @NotBlank(message = "Project's description must not be null of empty")
+    @NotBlank(message = "Project's description must not be null or empty")
     private String description;
     @Embedded
     private Audit audit = new Audit();
@@ -32,7 +32,7 @@ public class Project {
         return id;
     }
 
-    void setId(final int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 

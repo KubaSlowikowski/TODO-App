@@ -80,22 +80,6 @@ class TaskController {
         return ResponseEntity.noContent().build();
     }
 
-//    @PostMapping("/tasks")
-//    ResponseEntity<?> createTask(@RequestBody @Valid Task task) {
-//        Optional<Task> optional = repository.findById(task.getId());
-//        if(optional.isPresent()) {
-//            logger.warn("Task already exist");
-//            return ResponseEntity.badRequest().build();
-//        }
-//        else {
-//            repository.save(task);
-//            logger.info("Created new Task");
-//            HttpHeaders headers = new HttpHeaders();
-//            headers.add("Location", "http://localhost:8080/tasks/" + task.getId());
-//            return new ResponseEntity<>(task, headers, HttpStatus.CREATED);
-//        }
-//    }
-
     //@PostMapping("/tasks")
     @RequestMapping(method = RequestMethod.POST)
     ResponseEntity<Task> createTask (@RequestBody @Valid Task toCreate) {

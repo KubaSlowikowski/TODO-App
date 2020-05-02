@@ -34,9 +34,6 @@ public class Task {
         if(group != null) {
             this.group = group;
         }
-//        else {
-//            System.err.println("Group is null!");
-//        }
     }
 
     public int getId() {

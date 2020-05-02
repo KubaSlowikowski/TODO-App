@@ -9,7 +9,7 @@ public class ProjectStep {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @NotBlank(message = "Project step's description must not be null of empty")
+    @NotBlank(message = "Project step's description must not be null or empty")
     private String description;
     private Long daysToDeadline;
     @ManyToOne
