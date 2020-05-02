@@ -4,6 +4,7 @@ import io.github.mat3e.todoapp.logic.ProjectService;
 import io.github.mat3e.todoapp.model.Project;
 import io.github.mat3e.todoapp.model.ProjectStep;
 import io.github.mat3e.todoapp.model.projection.ProjectWriteModel;
+import io.micrometer.core.annotation.Timed;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,6 +52,7 @@ class ProjectController {
         return "projects";
     }
 
+    @Timed(value = "project.create.group", histogram = true, percentiles = {0.5, 0.95, 0.99}) //wszystkie metody mające tą adnotację, wysyłają dodatkowe informacje
     @PostMapping("/{id}")
     String createGroup(
             @ModelAttribute("project") ProjectWriteModel current,

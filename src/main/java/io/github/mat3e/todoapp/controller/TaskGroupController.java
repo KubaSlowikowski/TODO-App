@@ -22,6 +22,7 @@ import java.net.URI;
 import java.util.List;
 
 @Controller
+@IllegalExceptionProcessing //wlasna adnotacja
 @RequestMapping("/groups")
 class TaskGroupController {
     private static final Logger logger = LoggerFactory.getLogger(TaskGroupController.class);
@@ -47,7 +48,7 @@ class TaskGroupController {
     }
 
     @PostMapping(produces = MediaType.TEXT_HTML_VALUE, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    String addPGroup(
+    String addGroup(
             @ModelAttribute("group") @Valid GroupWriteModel current,
             BindingResult bindingResult,
             Model model
@@ -65,6 +66,12 @@ class TaskGroupController {
     @PostMapping(params = "addTask", produces = MediaType.TEXT_HTML_VALUE)
     String addTask(@ModelAttribute("group") GroupWriteModel current) {
         current.getTasks().add(new GroupTaskWriteModel());
+        return "groups";
+    }
+
+    @PostMapping(params = "removeTask", produces = MediaType.TEXT_HTML_VALUE)
+    String removeTask(@ModelAttribute("group") GroupWriteModel current) {
+        current.getTasks().remove(current.getTasks().size()-1);
         return "groups";
     }
 
@@ -94,16 +101,6 @@ class TaskGroupController {
     @RequestMapping(method = RequestMethod.GET, path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<List<Task>> readAllTasksFromGroup(@PathVariable int id) {
         return ResponseEntity.ok(taskRepository.findAllByGroup_Id(id));
-    }
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    ResponseEntity<String> handelIllegalArgument(IllegalArgumentException e) {
-        return ResponseEntity.notFound().build();
-    }
-
-    @ExceptionHandler(IllegalStateException.class)
-    ResponseEntity<String> handleIllegalState(IllegalStateException e) {
-        return ResponseEntity.badRequest().body(e.getMessage());
     }
 
     @ModelAttribute("groups")

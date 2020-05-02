@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo App: groups</title>
-    <link rel="stylesheet" href="https://igoradamenko.github.io/awsm.css/css/awsm.min.css">
+    <link rel="stylesheet" href="https://igoradamenko.github.io/awsm.css/css/awsm_theme_pearl-lusta.css">
     <style>
         .Bd {
             border: solid 1px black;
@@ -43,7 +43,7 @@
             <label>
                 <input type="checkbox"/>
                 <span th:text="${group.description}"></span>
-                <small th:text="|(${group.deadline})|"></small>
+                <small th:text="|(termin: ${group.deadline})|"></small>
             </label>
             <hr class="M(0)"/>
         </dt>
@@ -79,6 +79,7 @@
             </fieldset>
             <div>
                 <button type="submit" name="addTask">+</button>
+                <button type="submit" name="removeTask">-</button>
             </div>
             <p>
                 <button type="submit">Dodaj</button>
