@@ -174,6 +174,12 @@ class ProjectServiceTest {
         }
 
         @Override
+        public boolean existsByDescription(final String description) {
+            return map.values().stream()
+                    .anyMatch(group -> group.getDescription().equals(description));
+        }
+
+        @Override
         public TaskGroup save(final TaskGroup entity) {
             if (entity.getId() == 0) {
                 try {
