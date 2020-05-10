@@ -98,7 +98,8 @@ class TaskController {
         }
         repository.findById(id)
                 .map(Task::toogle)
-                .ifPresent(eventPublisher::publishEvent);
+                .ifPresent(eventPublisher::publishEvent); //wysyłanie zdarzenia
+        //metody, ktore zapisują zdarzenia powinny się dziać w metodach z @Transactional
         return ResponseEntity.noContent().build();
     }
 

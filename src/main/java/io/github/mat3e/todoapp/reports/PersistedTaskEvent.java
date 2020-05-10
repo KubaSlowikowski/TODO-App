@@ -8,7 +8,7 @@ import java.time.ZoneId;
 
 @Entity
 @Table(name = "task_events")
-class PersistedTaskEvent {
+class PersistedTaskEvent { //log ze zmianami w tasku
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;

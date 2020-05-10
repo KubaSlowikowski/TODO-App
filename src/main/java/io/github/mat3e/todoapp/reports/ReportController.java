@@ -30,6 +30,16 @@ class ReportController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+//    @GetMapping("/doneBeforeDeadline")
+//    ResponseEntity<List<TaskDoneBeforeDeadline>> readTasksDoneBeforeDeadline() {
+//        var list = taskRepository.findByDone(true)
+//                .stream()
+//                .map(task -> new TaskDoneBeforeDeadline(task, eventRepository.findByNameEqualsAndTaskIdEquals("TaskDone", task.getId())))
+//                .filter(taskDoneBeforeDeadline -> taskDoneBeforeDeadline.doneBeforeDeadline)
+//                .collect(Collectors.toList());
+//        return ResponseEntity.ok(list);
+//    }
+
     private static class TaskWithChangesCount {
         public String description;
         public boolean done;
@@ -41,4 +51,20 @@ class ReportController {
             changesCount = events.size();
         }
     }
+
+//    private static class TaskDoneBeforeDeadline {
+//        public String description;
+//        public boolean doneBeforeDeadline;
+//
+//        TaskDoneBeforeDeadline(final Task task, final List<PersistedTaskEvent> events) {
+//            description = task.getDescription();
+//            if (task.getDeadline() == null) {
+//                doneBeforeDeadline = true;
+//            } else {
+//                var sorted = events.stream().map(event -> event.occurrence).collect(Collectors.toList());
+//                var a = Collections.max(sorted);
+//                doneBeforeDeadline = a.isBefore(task.getDeadline());
+//            }
+//        }
+//    }
 }
