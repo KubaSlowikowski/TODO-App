@@ -6,6 +6,8 @@ import io.github.mat3e.todoapp.model.ProjectStep;
 import io.github.mat3e.todoapp.model.projection.ProjectWriteModel;
 import io.micrometer.core.annotation.Timed;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +17,8 @@ import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@PreAuthorize("hasRole('ROLE_ADMIN')")
+//@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
 @Controller
 @RequestMapping("/projects")
 class ProjectController {
@@ -25,9 +29,12 @@ class ProjectController {
     }
 
     @GetMapping
-    String showProjects(Model model) {
-        model.addAttribute("project", new ProjectWriteModel());
-        return "projects"; //nazwa MVC View
+    String showProjects(Model model, Authentication auth) {
+//        if (auth!=null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+            model.addAttribute("project", new ProjectWriteModel());
+            return "projects"; //nazwa MVC View
+//        }
+//        return "index";
     }
 
     @PostMapping

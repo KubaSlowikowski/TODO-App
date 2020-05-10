@@ -61,9 +61,9 @@ class ReportController {
 //            if (task.getDeadline() == null) {
 //                doneBeforeDeadline = true;
 //            } else {
-//                var sorted = events.stream().map(event -> event.occurrence).collect(Collectors.toList());
-//                var a = Collections.max(sorted);
-//                doneBeforeDeadline = a.isBefore(task.getDeadline());
+//                events.stream()
+//                        .
+//                        .filter(event -> event.occurrence.isBefore(task.getDeadline()))
 //            }
 //        }
 //    }

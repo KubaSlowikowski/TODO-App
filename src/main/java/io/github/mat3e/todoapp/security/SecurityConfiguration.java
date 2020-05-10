@@ -7,12 +7,18 @@ import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurer
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 
+@EnableGlobalMethodSecurity(
+        jsr250Enabled = true,
+        securedEnabled = true,
+        prePostEnabled = true
+) //pozwala na użycie adnotacji pomocnych w security
 @KeycloakConfiguration //ułatwia szukanie Keycloakowych klas
 class SecurityConfiguration extends KeycloakWebSecurityConfigurerAdapter { //dzięki tej klasie, nasza aplikacja wie o Keycloak'u
     @Bean
@@ -39,10 +45,10 @@ class SecurityConfiguration extends KeycloakWebSecurityConfigurerAdapter { //dzi
     protected void configure(final HttpSecurity http) throws Exception {
         super.configure(http);
         http.authorizeRequests()    //zabezpieczanie adresów
-                .antMatchers("/info/*")
+                /*.antMatchers("/info/*")
                 .hasRole("USER") //prefix 'ROLE_' doda się z metody configureGlobal(...)
                 .antMatchers("/projects")
-                .hasRole("ADMIN")
+                .hasRole("ADMIN")*/
                 .anyRequest()
                 .permitAll();
     }
